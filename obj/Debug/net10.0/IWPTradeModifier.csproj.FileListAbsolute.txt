@@ -1,0 +1,14 @@
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/bin/Debug/net10.0/IWPTradeModifier
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/bin/Debug/net10.0/IWPTradeModifier.deps.json
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/bin/Debug/net10.0/IWPTradeModifier.runtimeconfig.json
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/bin/Debug/net10.0/IWPTradeModifier.dll
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/bin/Debug/net10.0/IWPTradeModifier.pdb
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/obj/Debug/net10.0/IWPTradeModifier.GeneratedMSBuildEditorConfig.editorconfig
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/obj/Debug/net10.0/IWPTradeModifier.AssemblyInfoInputs.cache
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/obj/Debug/net10.0/IWPTradeModifier.AssemblyInfo.cs
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/obj/Debug/net10.0/IWPTradeModifier.csproj.CoreCompileInputs.cache
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/obj/Debug/net10.0/IWPTradeModifier.dll
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/obj/Debug/net10.0/refint/IWPTradeModifier.dll
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/obj/Debug/net10.0/IWPTradeModifier.pdb
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/obj/Debug/net10.0/IWPTradeModifier.genruntimeconfig.cache
+/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/obj/Debug/net10.0/ref/IWPTradeModifier.dll
