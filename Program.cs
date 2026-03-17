@@ -1,13 +1,19 @@
 ﻿class Program
 {
-    // Modifiers
+    // Modifiers, you can change them to whatever
     static float stock_multiplier = 3f;
-    static float ammo_multiplier = 2.0f;
+    static float ammo_multiplier = 2f;
     static float stock_chance_multiplier = 2f;
-    static float buy_multiplier = 3.0f;
-    static float sell_multiplier = 0.1f;
+    static float buy_multiplier = 2f;
+    static float sell_multiplier = 0.33f;
 
     private static void Main()
+    {
+        modify_trade();
+        Console.WriteLine("\n--- Batch processing complete! ---");
+    }
+
+    public static void modify_trade()
     {
         // Setup paths
         string source_folder = "Input";     // Put your original .ltx files here
@@ -43,6 +49,7 @@
 
             // There are three sections in a trade file
             // 1: Sell, 2: Buy, And 3: Supplies
+            string[] supply_sections = {"[supplies_generic]", "[supplies_1]"};
             int section_state = 1;
 
             foreach (string line in lines)
@@ -57,7 +64,7 @@
                     section_state = 2;
                     buy_section = line_number;
                 }
-                else if (line.Contains("[supplies_generic]") || line.Contains("[supplies_1]"))
+                else if (in_section(line, supply_sections))
                 {
                     section_state = 3;
                     supplies_section = line_number;
@@ -93,7 +100,9 @@
                         else if (section_state == 3) // Supplies Section
                         {
                             if (line.Contains("ammo_"))
-                                value1 = (int)(val1 * stock_chance_multiplier * ammo_multiplier);
+                                value1 = (int)(val1 * stock_multiplier * ammo_multiplier);
+                            else if (line.Contains("wpn_")) // Keep stock for weapons to 1 only
+                                value1 = val1;
                             else
                                 value1 = (int)(val1 * stock_multiplier);
 
@@ -113,12 +122,21 @@
             string fullOutputPath = Path.Combine(output_folder, file_name);
             File.WriteAllLines(fullOutputPath, output_lines);
             
-            Console.Write($"Processed: {file_name}, ");
-            Console.Write($"Sell Section: {sell_section}, ");
+            Console.Write($"Processed {file_name}: ");
+            Console.Write($"[Sell Section: {sell_section}, ");
             Console.Write($"Buy Section: {buy_section}, ");
-            Console.Write($"Supplies Section: {supplies_section}\n");
+            Console.Write($"Supplies Section: {supplies_section}]\n");
+        }
+    }
+
+    public static bool in_section(string line, string[] sections)
+    {
+        foreach (string section in sections)
+        {
+            if (line.Contains(section))
+                return true;
         }
 
-        Console.WriteLine("\n--- Batch processing complete! ---");
+        return false;
     }
 }

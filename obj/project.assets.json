@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/IWPTradeModifier.csproj",
+      "projectUniqueName": "/home/nutrynity/Documents/GitHub/iwp_trade-modifier/IWPTradeModifier.csproj",
       "projectName": "IWPTradeModifier",
-      "projectPath": "/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/IWPTradeModifier.csproj",
+      "projectPath": "/home/nutrynity/Documents/GitHub/iwp_trade-modifier/IWPTradeModifier.csproj",
       "packagesPath": "/home/nutrynity/.nuget/packages/",
-      "outputPath": "/home/nutrynity/Documents/IWPTradeModifier/IWPTradeModifier/obj/",
+      "outputPath": "/home/nutrynity/Documents/GitHub/iwp_trade-modifier/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/nutrynity/.nuget/NuGet/NuGet.Config"
