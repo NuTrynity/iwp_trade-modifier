@@ -7,6 +7,13 @@
     static float buy_multiplier = 2f;
     static float sell_multiplier = 0.33f;
 
+    public enum SECTION
+    {
+        SELL,
+        BUY,
+        SUPPLIES
+    }
+
     private static void Main()
     {
         modify_trade();
@@ -15,6 +22,8 @@
 
     public static void modify_trade()
     {
+        SECTION current_section = SECTION.SELL;
+
         // Setup paths
         string source_folder = "Input";     // Put your original .ltx files here
         string output_folder = "Output";    // Processed files will go here
@@ -50,23 +59,22 @@
             // There are three sections in a trade file
             // 1: Sell, 2: Buy, And 3: Supplies
             string[] supply_sections = {"[supplies_generic]", "[supplies_1]"};
-            int section_state = 1;
 
             foreach (string line in lines)
             {
                 if (line.Contains("[trade_generic_sell]"))
                 {
-                    section_state = 1;
+                    current_section = SECTION.SELL;
                     sell_section = line_number;
                 }
                 else if (line.Contains("[trade_generic_buy]"))
                 {
-                    section_state = 2;
+                    current_section = SECTION.BUY;
                     buy_section = line_number;
                 }
                 else if (contains_words(line, supply_sections))
                 {
-                    section_state = 3;
+                    current_section = SECTION.SUPPLIES;
                     supplies_section = line_number;
                 }
 
@@ -74,50 +82,54 @@
                 //--parts[0]-------parts[1]------------
                 //  Name    =   Number 1,   Number 2
                 //--name--------values[0]---values[1]--
-                if (has_words(line, ["=", ","]))
+                if (!has_words(line, ["=", ","]))
+                {   
+                    output_lines.Add(line);
+                    line_number++;
+
+                    continue;
+                }
+
+                string[] parts = line.Split('=');
+                string name = parts[0];
+                string[] values = parts[1].Split(',');
+
+                if (values.Length >= 2 &&
+                    float.TryParse(values[0].Trim(), out float val1) &&
+                    float.TryParse(values[1].Trim(), out float val2))
                 {
-                    string[] parts = line.Split('=');
-                    string name = parts[0];
-                    string[] values = parts[1].Split(',');
+                    float value1 = 0.0f;
+                    float value2 = 0.0f;
 
-                    if (values.Length >= 2 &&
-                        float.TryParse(values[0].Trim(), out float val1) &&
-                        float.TryParse(values[1].Trim(), out float val2))
+                    switch(current_section)
                     {
-                        float value1 = 0.0f;
-                        float value2 = 0.0f;
-
-                        if (section_state == 1) // Sell Section
-                        {
+                        case SECTION.SELL:
                             value1 = val1 * sell_multiplier;
                             value2 = val2 * sell_multiplier;
-                        }
-                        else if (section_state == 2) // Buy Section
-                        {
+                            break;
+                        case SECTION.BUY:
                             value1 = val1 * buy_multiplier;
                             value2 = val2 * buy_multiplier;
-                        }
-                        else if (section_state == 3) // Supplies Section
-                        {
-                            string[] weapon_prefixes = {"wpn_", "sil_"};
+
+                            break;
+                        case SECTION.SUPPLIES:
+                            // Keep stock for weapons/outfits/detectors to 1 only
+                            string[] single_stock_items = {"wpn_", "sil_", "detector_", "_outfit"};
 
                             if (line.Contains("ammo_"))
                                 value1 = (int)(val1 * stock_multiplier * ammo_multiplier);
-                            else if (contains_words(line, weapon_prefixes)) // Keep stock for weapons to 1 only
+                            else if (contains_words(line, single_stock_items)) 
                                 value1 = val1;
                             else
                                 value1 = (int)(val1 * stock_multiplier);
 
                             value2 = Math.Min(val2 * stock_chance_multiplier, 1.0f);
-                        }
-                        
-                        output_lines.Add($"{name} = {value1:F1}, {value2:F1}");
-                        continue;
+                            
+                            break;
                     }
+                    
+                    output_lines.Add($"{name} = {value1:F1}, {value2:F1}");
                 }
-
-                output_lines.Add(line);
-                line_number++;
             }
 
             // Save to Output folder with the same file_name
