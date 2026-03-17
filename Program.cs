@@ -82,8 +82,8 @@
                 //--parts[0]-------parts[1]------------
                 //  Name    =   Number 1,   Number 2
                 //--name--------values[0]---values[1]--
-                if (!has_words(line, ["=", ","]))
-                {   
+                if (has_words(line, ["=", ","]) == false)
+                {
                     output_lines.Add(line);
                     line_number++;
 
