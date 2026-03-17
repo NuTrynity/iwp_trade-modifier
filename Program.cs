@@ -64,7 +64,7 @@
                     section_state = 2;
                     buy_section = line_number;
                 }
-                else if (in_section(line, supply_sections))
+                else if (contains_words(line, supply_sections))
                 {
                     section_state = 3;
                     supplies_section = line_number;
@@ -74,7 +74,7 @@
                 //--parts[0]-------parts[1]------------
                 //  Name    =   Number 1,   Number 2
                 //--name--------values[0]---values[1]--
-                if (line.Contains("=") && line.Contains(","))
+                if (has_words(line, ["=", ","]))
                 {
                     string[] parts = line.Split('=');
                     string name = parts[0];
@@ -99,9 +99,11 @@
                         }
                         else if (section_state == 3) // Supplies Section
                         {
+                            string[] weapon_prefixes = {"wpn_", "sil_"};
+
                             if (line.Contains("ammo_"))
                                 value1 = (int)(val1 * stock_multiplier * ammo_multiplier);
-                            else if (line.Contains("wpn_")) // Keep stock for weapons to 1 only
+                            else if (contains_words(line, weapon_prefixes)) // Keep stock for weapons to 1 only
                                 value1 = val1;
                             else
                                 value1 = (int)(val1 * stock_multiplier);
@@ -129,14 +131,27 @@
         }
     }
 
-    public static bool in_section(string line, string[] sections)
+    public static bool contains_words(string line, string[] words)
     {
-        foreach (string section in sections)
+        foreach (string word in words)
         {
-            if (line.Contains(section))
+            if (line.Contains(word))
                 return true;
         }
 
         return false;
+    }
+
+    public static bool has_words(string line, string[] words)
+    {
+        bool has_all_words = true;
+
+        foreach (string word in words)
+        {
+            if (!line.Contains(word))
+                return false;
+        }
+
+        return has_all_words;
     }
 }
