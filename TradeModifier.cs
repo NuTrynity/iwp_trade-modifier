@@ -1,3 +1,13 @@
+public class TradeConfigs
+{
+    // Modifiers, you can change them to whatever
+    public float stock_multiplier;
+    public float stock_chance_multiplier;
+    public float ammo_multiplier;
+    public float buy_multiplier;
+    public float sell_multiplier;
+}
+
 public class TradeModifier
 {
     public enum SECTION
@@ -22,7 +32,7 @@ public class TradeModifier
         // 2. Automatically get all .ltx files from the source folder
         string[] input_files = Directory.GetFiles(source_folder, "*.ltx");
 
-        if (input_files.Length == 0)
+        if (input_files.Length <= 0)
         {
             Console.WriteLine($"No .ltx files found in {source_folder}. Add some files and try again!");
             return;
@@ -100,15 +110,24 @@ public class TradeModifier
 
                             break;
                         case SECTION.SUPPLIES:
-                            // Keep stock for weapons/outfits/detectors to 1 only
-                            string[] single_stock_items = {"wpn_", "sil_", "detector_", "_outfit"};
+                            // Keep stock for weapons, outfits, etc. to 1 only
+                            string[] single_stock_items = 
+                            {
+                                "wpn",
+                                "sil",
+                                "detector",
+                                "outfit",
+                                "helm",
+                                "equ"
+                            };
 
-                            if (line.Contains("ammo_"))
-                                value1 = (int)(val1 * trade_configs.stock_multiplier * trade_configs.ammo_multiplier);
-                            else if (contains_words(line, single_stock_items)) 
-                                value1 = val1;
-                            else
-                                value1 = (int)(val1 * trade_configs.stock_multiplier);
+                            if (!contains_words(line, single_stock_items))
+                            {
+                                if (has_words(line, ["ammo", "grenade"]))
+                                    value1 = (int)(val1 * trade_configs.stock_multiplier * trade_configs.ammo_multiplier);
+                                else
+                                    value1 = (int)(val1 * trade_configs.stock_multiplier);
+                            }
 
                             value2 = Math.Min(val2 * trade_configs.stock_chance_multiplier, 1.0f);
                             
@@ -153,14 +172,4 @@ public class TradeModifier
 
         return has_all_words;
     }
-}
-
-public class TradeConfigs
-{
-    // Modifiers, you can change them to whatever
-    public float stock_multiplier;
-    public float stock_chance_multiplier;
-    public float ammo_multiplier;
-    public float buy_multiplier;
-    public float sell_multiplier;
 }
