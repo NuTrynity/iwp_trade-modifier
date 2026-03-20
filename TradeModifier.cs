@@ -103,6 +103,7 @@ public class TradeModifier
                         case SECTION.SELL:
                             value1 = val1 * trade_configs.sell_multiplier;
                             value2 = val2 * trade_configs.sell_multiplier;
+                            
                             break;
                         case SECTION.BUY:
                             value1 = val1 * trade_configs.buy_multiplier;
@@ -121,7 +122,7 @@ public class TradeModifier
                                 "equ"
                             };
 
-                            if (!contains_words(line, single_stock_items))
+                            if (!has_words(line, single_stock_items))
                             {
                                 if (has_words(line, ["ammo", "grenade"]))
                                     value1 = (int)(val1 * trade_configs.stock_multiplier * trade_configs.ammo_multiplier);
