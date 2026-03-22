@@ -6,7 +6,7 @@
         trade_configs.stock_multiplier = 3.0f;
         trade_configs.stock_chance_multiplier = 2.0f;
         trade_configs.ammo_multiplier = 2.0f;
-        trade_configs.buy_multiplier = 1.0f;
+        trade_configs.buy_multiplier = 1.5f;
         trade_configs.sell_multiplier = 0.8f;
 
         TradeModifier trade_modifier = new TradeModifier();

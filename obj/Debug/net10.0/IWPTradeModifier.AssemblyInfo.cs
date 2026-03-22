@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IWPTradeModifier")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+30ac94df9700b17804f03d1ffcc20507dc259457")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+54ad48bc217527495a0a6191e45365433cfc8560")]
 [assembly: System.Reflection.AssemblyProductAttribute("IWPTradeModifier")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IWPTradeModifier")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

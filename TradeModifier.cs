@@ -55,7 +55,7 @@ public class TradeModifier
 
             // There are three sections in a trade file
             // 1: Sell, 2: Buy, And 3: Supplies
-            string[] supply_sections = {"[supplies_generic]", "[supplies_1]"};
+            string[] supply_sections = {"[supplies_generic]", "[supplies_1]", "[supplies_heavy_pockets]"};
 
             foreach (string line in lines)
             {
@@ -122,20 +122,19 @@ public class TradeModifier
                                 "equ"
                             };
 
-                            if (!has_words(line, single_stock_items))
-                            {
-                                if (has_words(line, ["ammo", "grenade"]))
-                                    value1 = (int)(val1 * trade_configs.stock_multiplier * trade_configs.ammo_multiplier);
-                                else
-                                    value1 = (int)(val1 * trade_configs.stock_multiplier);
-                            }
+                            if (has_words(line, ["ammo", "grenade"]))
+                                value1 = (int)(val1 * trade_configs.stock_multiplier * trade_configs.ammo_multiplier);
+                            else if (has_words(line, single_stock_items))
+                                value1 = (int)val1;
+                            else
+                                value1 = (int)(val1 * trade_configs.stock_multiplier);
 
                             value2 = Math.Min(val2 * trade_configs.stock_chance_multiplier, 1.0f);
                             
                             break;
                     }
                     
-                    output_lines.Add($"{name} = {value1:F1}, {value2:F1}");
+                    output_lines.Add($"{name} = {value1:0.##}, {value2:0.##}");
                 }
             }
 
