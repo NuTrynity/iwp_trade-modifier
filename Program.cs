@@ -3,15 +3,15 @@
     private static void Main()
     {
         TradeConfigs trade_configs = new TradeConfigs();
+        TradeModifier trade_modifier = new TradeModifier();
+        
         trade_configs.stock_multiplier = 3.0f;
         trade_configs.stock_chance_multiplier = 2.0f;
         trade_configs.ammo_multiplier = 2.0f;
-        trade_configs.buy_multiplier = 1.5f;
-        trade_configs.sell_multiplier = 0.8f;
+        trade_configs.buy_multiplier = 2.0f;
+        trade_configs.sell_multiplier = 0.7f;
 
-        TradeModifier trade_modifier = new TradeModifier();
         trade_modifier.modify_trade(trade_configs);
-
         Console.WriteLine("\n--- Batch processing complete! ---");
     }
 }
