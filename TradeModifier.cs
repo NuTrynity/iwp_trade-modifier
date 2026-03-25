@@ -74,6 +74,15 @@ public class TradeModifier
 
             foreach (string line in lines)
             {
+                // Traders buy items with 0% condition
+                if (line.Contains("buy_item_condition_factor"))
+                {
+                    string[] condition_line = line.Split("=");
+                    
+                    output_lines.Add($"{condition_line[0]} = {0.0}");
+                    continue;
+                }
+
                 if (line.Contains("[trade_generic_sell]"))
                 {
                     current_section = SECTION.SELL;
